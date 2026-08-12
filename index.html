@@ -1,863 +1,695 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OBSIDIAN MOTORS</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap');
-
-:root {
-  --bg: #0A0A0C;
-  --bg-raised: #131315;
-  --bg-card: #19191C;
-  --bg-glass: rgba(19,19,21,0.72);
-  --text: #E8E6E1;
-  --text-muted: #7C7975;
-  --text-faint: #3E3C39;
-  --accent: #D42B2B;
-  --accent-soft: rgba(212,43,43,0.10);
-  --accent-hover: #E84040;
-  --border: rgba(255,255,255,0.06);
-  --border-hover: rgba(255,255,255,0.12);
-  --radius-pill: 100px;
-  --radius-card: 16px;
-  --radius-sm: 8px;
-  --font-display: 'Outfit', system-ui, sans-serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --max-w: 1320px;
-}
-
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-  overflow-x: clip;
-  scrollbar-width: thin;
-  scrollbar-color: var(--text-faint) var(--bg);
-}
-
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: clip;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-::selection { background: var(--accent); color: #fff; }
-
-img { display: block; max-width: 100%; }
-
-/* ===== FLOATING PILL NAV ===== */
-.nav {
-  position: fixed;
-  top: 1.25rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  background: var(--bg-glass);
-  backdrop-filter: blur(24px) saturate(1.4);
-  -webkit-backdrop-filter: blur(24px) saturate(1.4);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
-  padding: 0.45rem 0.5rem 0.45rem 1.5rem;
-  transition: all 0.4s var(--ease);
-}
-
-.nav-logo {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.15em;
-  color: var(--text);
-  text-decoration: none;
-  margin-right: 1.5rem;
-  white-space: nowrap;
-}
-
-.nav-links {
-  display: flex;
-  gap: 0.2rem;
-  list-style: none;
-}
-
-.nav-links a {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-pill);
-  transition: color 0.25s, background 0.25s;
-  white-space: nowrap;
-}
-
-.nav-links a:hover {
-  color: var(--text);
-  background: rgba(255,255,255,0.06);
-}
-
-.nav-cta {
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: #fff;
-  background: var(--accent);
-  padding: 0.55rem 1.4rem;
-  border-radius: var(--radius-pill);
-  text-decoration: none;
-  margin-left: 0.5rem;
-  transition: background 0.25s;
-  white-space: nowrap;
-}
-
-.nav-cta:hover { background: var(--accent-hover); }
-
-/* ===== HERO ===== */
-.hero {
-  position: relative;
-  min-height: 100dvh;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-}
-
-.hero-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.55;
-}
-
-.hero-grad {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(10,10,12,0.4) 0%, transparent 35%),
-    linear-gradient(0deg, var(--bg) 0%, rgba(10,10,12,0.6) 30%, transparent 60%),
-    linear-gradient(90deg, rgba(10,10,12,0.55) 0%, transparent 45%);
-}
-
-.hero-inner {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: var(--max-w);
-  margin: 0 auto;
-  padding: 0 2.5rem 5rem;
-}
-
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 6.5rem);
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: -0.035em;
-  margin-bottom: 1.5rem;
-  opacity: 0;
-  transform: translateY(24px);
-  animation: rise 0.9s var(--ease) 0.4s forwards;
-}
-
-.hero-sub {
-  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
-  font-weight: 300;
-  color: var(--text-muted);
-  line-height: 1.65;
-  max-width: 440px;
-  margin-bottom: 2.5rem;
-  opacity: 0;
-  transform: translateY(18px);
-  animation: rise 0.9s var(--ease) 0.65s forwards;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  opacity: 0;
-  transform: translateY(16px);
-  animation: rise 0.9s var(--ease) 0.85s forwards;
-}
-
-.btn-primary {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #fff;
-  background: var(--accent);
-  border: none;
-  padding: 0.85rem 2rem;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.25s, transform 0.15s;
-}
-
-.btn-primary:hover { background: var(--accent-hover); }
-.btn-primary:active { transform: scale(0.97); }
-
-.btn-ghost {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  background: none;
-  border: 1px solid var(--border);
-  padding: 0.85rem 2rem;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  text-decoration: none;
-  transition: color 0.25s, border-color 0.25s;
-}
-
-.btn-ghost:hover {
-  color: var(--text);
-  border-color: var(--border-hover);
-}
-
-@keyframes rise {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== CATALOG ===== */
-.catalog {
-  padding: 6rem 2.5rem;
-  max-width: var(--max-w);
-  margin: 0 auto;
-}
-
-.catalog-heading {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 3.5rem;
-  line-height: 1.15;
-}
-
-.catalog-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
-}
-
-.car {
-  position: relative;
-  background: var(--bg-card);
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  transition: border-color 0.4s, transform 0.4s var(--ease);
-  cursor: pointer;
-}
-
-.car:hover {
-  border-color: var(--border-hover);
-  transform: translateY(-3px);
-}
-
-.car.wide { grid-column: span 2; }
-
-.car-img-wrap {
-  width: 100%;
-  overflow: hidden;
-}
-
-.car-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  transition: transform 0.6s var(--ease);
-}
-
-.car:hover .car-img {
-  transform: scale(1.03);
-}
-
-.car-body {
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 1rem;
-}
-
-.car-name {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.car-spec {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-weight: 400;
-}
-
-.car-price {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--accent);
-  white-space: nowrap;
-}
-
-.car-tag {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: var(--accent);
-  color: #fff;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--radius-pill);
-  z-index: 2;
-}
-
-/* ===== SPOTLIGHT ===== */
-.spotlight {
-  position: relative;
-  margin: 2rem 2.5rem;
-  border-radius: var(--radius-card);
-  overflow: hidden;
-  max-width: var(--max-w);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.spotlight-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  filter: brightness(0.75);
-}
-
-.spotlight-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(0deg, rgba(10,10,12,0.85) 0%, transparent 55%);
-  display: flex;
-  align-items: flex-end;
-  padding: 3rem;
-}
-
-.spotlight-content {
-  max-width: 500px;
-}
-
-.spotlight-name {
-  font-family: var(--font-display);
-  font-size: clamp(1.6rem, 3vw, 2.4rem);
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  line-height: 1.1;
-}
-
-.spotlight-desc {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  line-height: 1.65;
-  font-weight: 300;
-  margin-bottom: 1.5rem;
-}
-
-.spotlight-specs {
-  display: flex;
-  gap: 2.5rem;
-}
-
-.spec-val {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  line-height: 1;
-  margin-bottom: 0.3rem;
-}
-
-.spec-label {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
-}
-
-/* ===== ABOUT ===== */
-.about {
-  padding: 8rem 2.5rem;
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
-}
-
-.about-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  position: sticky;
-  top: 6rem;
-}
-
-.about-body {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.about-body p {
-  font-size: 1rem;
-  color: var(--text-muted);
-  line-height: 1.75;
-  font-weight: 300;
-  max-width: 52ch;
-}
-
-.about-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  margin-top: 1rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-}
-
-.about-item {
-  display: flex;
-  gap: 1rem;
-  align-items: baseline;
-}
-
-.about-item-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-  margin-top: 0.5rem;
-}
-
-.about-item-text {
-  font-size: 0.9rem;
-  color: var(--text);
-  font-weight: 400;
-  line-height: 1.5;
-}
-
-/* ===== CONTACT ===== */
-.contact {
-  padding: 6rem 2.5rem 8rem;
-  max-width: 640px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.contact-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
-  line-height: 1.15;
-}
-
-.contact-sub {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  font-weight: 300;
-  line-height: 1.65;
-  margin-bottom: 3rem;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  text-align: left;
-}
-
-.field {
-  width: 100%;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--text);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0.9rem 1.2rem;
-  outline: none;
-  transition: border-color 0.25s;
-}
-
-.field::placeholder { color: var(--text-faint); }
-.field:focus { border-color: var(--accent); }
-
-textarea.field { resize: vertical; min-height: 100px; }
-
-.contact-form .btn-primary {
-  width: 100%;
-  text-align: center;
-  margin-top: 0.5rem;
-  padding: 1rem;
-  font-size: 0.9rem;
-}
-
-.contact-details {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-
-.cd-item {
-  text-align: center;
-}
-
-.cd-label {
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: 0.4rem;
-}
-
-.cd-value {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  font-weight: 400;
-}
-
-.cd-value a {
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.cd-value a:hover { color: var(--text); }
-
-/* ===== FOOTER ===== */
-.footer {
-  padding: 2rem 2.5rem;
-  border-top: 1px solid var(--border);
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.footer-left {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  color: var(--text-faint);
-}
-
-.footer-right {
-  font-size: 0.75rem;
-  color: var(--text-faint);
-}
-
-/* ===== SCROLL REVEAL ===== */
-.sr {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
-}
-
-.sr.vis {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .catalog-grid { grid-template-columns: 1fr; }
-  .car.wide { grid-column: span 1; }
-  .about {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 5rem 1.5rem;
-  }
-  .about-title { position: static; }
-  .spotlight-specs { gap: 1.5rem; }
-}
-
-@media (max-width: 720px) {
-  .nav {
-    padding: 0.4rem 0.4rem 0.4rem 1.2rem;
-  }
-  .nav-links { display: none; }
-  .hero-inner { padding: 0 1.5rem 3.5rem; }
-  .hero-actions { flex-direction: column; align-items: flex-start; }
-  .catalog { padding: 4rem 1.5rem; }
-  .spotlight { margin: 1rem; }
-  .spotlight-overlay { padding: 1.5rem; }
-  .spotlight-specs { flex-wrap: wrap; gap: 1.5rem; }
-  .contact { padding: 4rem 1.5rem 5rem; }
-  .contact-details { flex-direction: column; gap: 1.5rem; }
-  .footer { padding: 1.5rem; justify-content: center; text-align: center; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sr { opacity: 1; transform: none; transition: none; }
-  .hero-title, .hero-sub, .hero-actions {
-    opacity: 1; transform: none; animation: none;
-  }
-  .car:hover .car-img { transform: none; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STRATOS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-paper:        oklch(8% 0.025 260);
+      --color-paper-2:      oklch(13% 0.018 260);
+      --color-paper-3:      oklch(18% 0.014 260);
+      --color-ink:          oklch(92% 0.008 75);
+      --color-ink-2:        oklch(65% 0.006 260);
+      --color-muted:        oklch(42% 0.005 260);
+      --color-accent:       oklch(62% 0.22 35);
+      --color-accent-hover: oklch(68% 0.24 35);
+      --color-accent-ink:   oklch(98% 0.005 60);
+      --color-rule:         oklch(20% 0.012 260);
+      --color-focus:        oklch(60% 0.18 255);
+
+      --font-display: 'Big Shoulders Display', sans-serif;
+      --font-body:    'Plus Jakarta Sans', sans-serif;
+
+      --text-xs:      0.75rem;
+      --text-sm:      0.875rem;
+      --text-base:    1rem;
+      --text-md:      1.125rem;
+      --text-lg:      1.25rem;
+      --text-xl:      1.5rem;
+      --text-2xl:     2rem;
+      --text-3xl:     2.5rem;
+      --text-4xl:     3.5rem;
+      --text-display: clamp(2.5rem, 5vw + 1rem, 4.5rem);
+      --text-hero:    clamp(3.5rem, 11vw, 12rem);
+
+      --space-2xs: 0.25rem;
+      --space-xs:  0.5rem;
+      --space-sm:  0.75rem;
+      --space-md:  1rem;
+      --space-lg:  1.5rem;
+      --space-xl:  2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+      --space-4xl: 9rem;
+
+      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro:   120ms;
+      --dur-short:   220ms;
+      --dur-long:    420ms;
+
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-pill: 100px;
+      --measure:     65ch;
+      --page-gutter: clamp(1.5rem, 5vw, 6rem);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { overflow-x: clip; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html { scroll-behavior: smooth; }
+    }
+
+    html {
+      font-size: 16px;
+      scroll-padding-top: 5rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: var(--text-base);
+      line-height: 1.6;
+      color: var(--color-ink);
+      background: var(--color-paper);
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    :focus { outline: none; }
+    :focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+      border-radius: inherit;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ═══ NAV ═══ */
+    .nav {
+      position: fixed;
+      top: var(--space-lg);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xl);
+      padding: var(--space-sm) var(--space-lg);
+      background: oklch(10% 0.02 260 / 0.6);
+      backdrop-filter: blur(24px) saturate(1.3);
+      -webkit-backdrop-filter: blur(24px) saturate(1.3);
+      border: 1px solid oklch(100% 0 0 / 0.05);
+      border-radius: var(--radius-pill);
+    }
+
+    .nav__brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: var(--text-lg);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav__links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+
+    .nav__link {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--color-ink-2);
+      transition: color var(--dur-micro) var(--ease-out);
+      white-space: nowrap;
+    }
+
+    .nav__link:hover { color: var(--color-ink); }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 var(--page-gutter) var(--space-2xl);
+    }
+
+    .hero__video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero__dim {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, var(--color-paper) 0%, oklch(8% 0.025 260 / 0.35) 45%, transparent 75%),
+        linear-gradient(to right, oklch(8% 0.025 260 / 0.5) 0%, transparent 55%);
+    }
+
+    .hero__spotlight {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        600px circle at var(--mx, 50%) var(--my, 50%),
+        oklch(100% 0 0 / 0.04),
+        transparent 60%
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero__rail {
+      position: absolute;
+      left: var(--page-gutter);
+      top: 22%;
+      bottom: 42%;
+      width: 1px;
+      background: var(--color-accent);
+      opacity: 0.4;
+      z-index: 2;
+    }
+
+    .hero__year {
+      position: absolute;
+      right: var(--page-gutter);
+      bottom: var(--space-xl);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(7rem, 16vw, 18rem);
+      line-height: 0.8;
+      color: oklch(100% 0 0 / 0.025);
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero__upper {
+      position: relative;
+      z-index: 3;
+      padding-left: var(--space-xl);
+      margin-bottom: var(--space-3xl);
+      animation: fade-up 0.7s var(--ease-out) 0.5s both;
+    }
+
+    .hero__sub {
+      font-size: var(--text-md);
+      color: var(--color-ink-2);
+      max-width: 26ch;
+      line-height: 1.5;
+      margin-bottom: var(--space-xl);
+    }
+
+    .hero__title {
+      position: relative;
+      z-index: 3;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: var(--text-hero);
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+      min-width: 0;
+      animation: fade-up 0.8s var(--ease-out) 0.2s both;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(32px); }
+    }
+
+    /* ═══ BUTTONS ═══ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-sm) var(--space-xl);
+      min-height: 44px;
+      font-family: var(--font-body);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-radius: var(--radius-pill);
+      white-space: nowrap;
+      transition: background var(--dur-micro) var(--ease-out),
+                  border-color var(--dur-micro) var(--ease-out),
+                  transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn:active { transform: scale(0.97); }
+
+    .btn--primary {
+      background: var(--color-accent);
+      color: var(--color-accent-ink);
+    }
+    .btn--primary:hover { background: var(--color-accent-hover); }
+
+    .btn--ghost {
+      background: transparent;
+      color: var(--color-ink);
+      border: 1px solid var(--color-rule);
+    }
+    .btn--ghost:hover { border-color: var(--color-ink-2); }
+
+    /* ═══ FEATURED ═══ */
+    .featured {
+      padding: var(--space-4xl) var(--page-gutter);
+    }
+
+    .featured__inner {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: var(--space-2xl);
+      align-items: center;
+    }
+
+    .featured__media {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .featured__media img { width: 100%; height: auto; }
+
+    .featured__body { padding: var(--space-lg) 0; }
+
+    .featured__eyebrow {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-lg);
+    }
+
+    .featured__heading {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-4xl);
+      line-height: 1.02;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: var(--space-lg);
+    }
+
+    .featured__desc {
+      color: var(--color-ink-2);
+      line-height: 1.65;
+      max-width: var(--measure);
+      margin-bottom: var(--space-xl);
+    }
+
+    .featured__specs {
+      display: flex;
+      gap: var(--space-2xl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--color-rule);
+      margin-bottom: var(--space-xl);
+    }
+
+    .spec__val {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-2xl);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .spec__label {
+      font-size: var(--text-xs);
+      color: var(--color-ink-2);
+      margin-top: var(--space-2xs);
+    }
+
+    /* ═══ COLLECTION ═══ */
+    .collection {
+      padding: var(--space-3xl) var(--page-gutter) var(--space-4xl);
+    }
+
+    .section-heading {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-display);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1.05;
+      margin-bottom: var(--space-2xl);
+    }
+
+    .collection__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    .car {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--color-paper-2);
+    }
+
+    .car--hero { grid-column: 1 / -1; }
+
+    .car__img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform var(--dur-long) var(--ease-out);
+    }
+
+    .car:hover .car__img { transform: scale(1.03); }
+
+    .car__info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-2xl) var(--space-lg) var(--space-lg);
+      background: linear-gradient(to top, oklch(0% 0 0 / 0.6) 0%, transparent 100%);
+    }
+
+    .car__name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-xl);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+
+    .car__spec {
+      font-size: var(--text-sm);
+      color: oklch(78% 0.005 75);
+      margin-top: var(--space-2xs);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ═══ PHILOSOPHY ═══ */
+    .philosophy {
+      padding: var(--space-4xl) var(--page-gutter);
+      border-top: 1px solid var(--color-rule);
+    }
+
+    .philosophy__inner { max-width: 40rem; }
+
+    .philosophy__heading {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-3xl);
+      text-transform: uppercase;
+      line-height: 1.08;
+      margin-bottom: var(--space-xl);
+    }
+
+    .philosophy__text {
+      font-size: var(--text-md);
+      color: var(--color-ink-2);
+      line-height: 1.7;
+      max-width: var(--measure);
+    }
+
+    .philosophy__text + .philosophy__text { margin-top: var(--space-md); }
+
+    /* ═══ CONTACT ═══ */
+    .contact {
+      padding: var(--space-4xl) var(--page-gutter);
+      text-align: center;
+    }
+
+    .contact__heading {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-display);
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: var(--space-lg);
+    }
+
+    .contact__note {
+      font-size: var(--text-md);
+      color: var(--color-ink-2);
+      max-width: 36ch;
+      margin: 0 auto var(--space-xl);
+      line-height: 1.5;
+    }
+
+    .contact__phone {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: var(--text-2xl);
+      font-variant-numeric: tabular-nums;
+      margin-bottom: var(--space-xl);
+    }
+
+    .contact__phone a {
+      transition: color var(--dur-micro) var(--ease-out);
+    }
+    .contact__phone a:hover { color: var(--color-accent); }
+
+    /* ═══ FOOTER ═══ */
+    .footer {
+      padding: var(--space-xl) var(--page-gutter);
+      border-top: 1px solid var(--color-rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer__brand {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: var(--text-lg);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer__note {
+      font-size: var(--text-xs);
+      color: var(--color-muted);
+    }
+
+    /* ═══ REVEAL ═══ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity var(--dur-long) var(--ease-out),
+                  transform var(--dur-long) var(--ease-out);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 60rem) {
+      .featured__inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-xl);
+      }
+      .nav__links { display: none; }
+      .featured__specs { gap: var(--space-xl); }
+    }
+
+    @media (max-width: 40rem) {
+      .collection__grid { grid-template-columns: 1fr; }
+      .car--hero { grid-column: span 1; }
+      .hero__upper { padding-left: 0; }
+      .hero__rail, .hero__year { display: none; }
+      .footer {
+        flex-direction: column;
+        gap: var(--space-md);
+        text-align: center;
+      }
+    }
+
+    /* ═══ REDUCED MOTION ═══ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV — скруглённая плашка -->
-<nav class="nav">
-  <a href="#" class="nav-logo">OBSIDIAN</a>
-  <ul class="nav-links">
-    <li><a href="#catalog">Каталог</a></li>
-    <li><a href="#about">О нас</a></li>
-    <li><a href="#contact">Связаться</a></li>
-  </ul>
-  <a href="#contact" class="nav-cta">Записаться</a>
-</nav>
+  <nav class="nav">
+    <a href="#" class="nav__brand">Stratos</a>
+    <ul class="nav__links">
+      <li><a href="#collection" class="nav__link">Коллекция</a></li>
+      <li><a href="#about" class="nav__link">О нас</a></li>
+      <li><a href="#contact" class="nav__link">Связаться</a></li>
+    </ul>
+  </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="grok-video-aeb14a39-a59a-402d-b4ed-3543dba01932.mp4" type="video/mp4">
-  </video>
-  <div class="hero-grad"></div>
-  <div class="hero-inner">
-    <h1 class="hero-title">Машины, которые<br>не нуждаются<br>в представлении</h1>
-    <p class="hero-sub">Курируем коллекцию спортивных автомобилей. Не продаём — подбираем под характер владельца.</p>
-    <div class="hero-actions">
-      <a href="#catalog" class="btn-primary">Смотреть каталог</a>
-      <a href="#contact" class="btn-ghost">Записаться на показ</a>
+  <section class="hero">
+    <video class="hero__video" autoplay muted loop playsinline>
+      <source src="grok-video-aeb14a39-a59a-402d-b4ed-3543dba01932.mp4" type="video/mp4">
+    </video>
+    <div class="hero__dim"></div>
+    <div class="hero__spotlight"></div>
+    <div class="hero__rail"></div>
+    <div class="hero__year">26</div>
+    <div class="hero__upper">
+      <p class="hero__sub">Спортивные автомобили для тех, кто чувствует дорогу</p>
+      <a href="#collection" class="btn btn--primary">Смотреть коллекцию</a>
     </div>
-  </div>
-</section>
+    <h1 class="hero__title">Stratos</h1>
+  </section>
 
-<!-- CATALOG -->
-<section class="catalog" id="catalog">
-  <h2 class="catalog-heading sr">Сейчас в шоуруме</h2>
-
-  <div class="catalog-grid">
-
-    <article class="car wide sr">
-      <span class="car-tag">Только поступил</span>
-      <div class="car-img-wrap">
-        <img src="6db0d75c-5f59-4a15-a75d-dc955e213f60.png" alt="Porsche 911 Carrera" class="car-img">
+  <section class="featured">
+    <div class="featured__inner">
+      <div class="featured__media reveal">
+        <img src="afe09e98-2ab3-409e-89dd-b5e0cca8d829.png" alt="Audi R8 V10 Performance на фоне ночного города с красным неоновым светом">
       </div>
-      <div class="car-body">
-        <div>
-          <h3 class="car-name">Porsche 911 Carrera</h3>
-          <p class="car-spec">992 &middot; 385 л.с. &middot; PDK &middot; 2024</p>
+      <div class="featured__body reveal">
+        <span class="featured__eyebrow">Избранное</span>
+        <h2 class="featured__heading">Audi R8 V10 Performance</h2>
+        <p class="featured__desc">Среднемоторный суперкар с атмосферным V10 и полным приводом quattro. Последний из поколения, где двигатель разговаривает с водителем напрямую.</p>
+        <div class="featured__specs">
+          <div class="spec">
+            <div class="spec__val">620</div>
+            <div class="spec__label">л.с.</div>
+          </div>
+          <div class="spec">
+            <div class="spec__val">3.1</div>
+            <div class="spec__label">до 100 км/ч</div>
+          </div>
+          <div class="spec">
+            <div class="spec__val">331</div>
+            <div class="spec__label">км/ч</div>
+          </div>
         </div>
-        <span class="car-price">$124 500</span>
-      </div>
-    </article>
-
-    <article class="car sr">
-      <div class="car-img-wrap">
-        <img src="13fff7d3-0880-45b6-b916-33146de52787.png" alt="BMW M4 Competition" class="car-img">
-      </div>
-      <div class="car-body">
-        <div>
-          <h3 class="car-name">BMW M4 Competition</h3>
-          <p class="car-spec">G82 &middot; 510 л.с. &middot; M xDrive</p>
-        </div>
-        <span class="car-price">$89 900</span>
-      </div>
-    </article>
-
-    <article class="car sr">
-      <div class="car-img-wrap">
-        <img src="140c29e9-c5b3-4f96-bcf7-b911f6d790c6.png" alt="Mercedes-AMG A 45 S" class="car-img">
-      </div>
-      <div class="car-body">
-        <div>
-          <h3 class="car-name">Mercedes-AMG A 45 S</h3>
-          <p class="car-spec">W177 &middot; 421 л.с. &middot; 4MATIC+</p>
-        </div>
-        <span class="car-price">$72 500</span>
-      </div>
-    </article>
-
-    <article class="car sr">
-      <div class="car-img-wrap">
-        <img src="175d4a6b-812f-4ddf-951e-8e4aacc8d4ad.png" alt="Toyota GR Supra" class="car-img">
-      </div>
-      <div class="car-body">
-        <div>
-          <h3 class="car-name">Toyota GR Supra</h3>
-          <p class="car-spec">A90 &middot; 382 л.с. &middot; задний привод</p>
-        </div>
-        <span class="car-price">$56 200</span>
-      </div>
-    </article>
-
-    <article class="car sr">
-      <span class="car-tag">Последний</span>
-      <div class="car-img-wrap">
-        <img src="afe09e98-2ab3-409e-89dd-b5e0cca8d829.png" alt="Audi R8 V10 Performance" class="car-img">
-      </div>
-      <div class="car-body">
-        <div>
-          <h3 class="car-name">Audi R8 V10 Performance</h3>
-          <p class="car-spec">Type 4S &middot; 620 л.с. &middot; quattro</p>
-        </div>
-        <span class="car-price">$169 800</span>
-      </div>
-    </article>
-
-    <article class="car sr">
-      <div class="car-img-wrap">
-        <img src="d1ce1b24-9c11-47f0-84c4-9fc14ad08ffe.png" alt="Ford Mustang GT" class="car-img">
-      </div>
-      <div class="car-body">
-        <div>
-          <h3 class="car-name">Ford Mustang GT 5.0</h3>
-          <p class="car-spec">S550 &middot; 460 л.с. &middot; задний привод</p>
-        </div>
-        <span class="car-price">$48 700</span>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-<!-- SPOTLIGHT -->
-<div class="spotlight sr">
-  <img src="afe09e98-2ab3-409e-89dd-b5e0cca8d829.png" alt="Audi R8 V10 в ночном городе" class="spotlight-img">
-  <div class="spotlight-overlay">
-    <div class="spotlight-content">
-      <h3 class="spotlight-name">Audi R8 V10 Performance</h3>
-      <p class="spotlight-desc">Последний атмосферный суперкар Audi. 5.2-литровый V10, 620 лошадиных сил, разгон до сотни за 3.1 секунды. Эта модель больше не производится.</p>
-      <div class="spotlight-specs">
-        <div>
-          <div class="spec-val">620</div>
-          <div class="spec-label">л.с.</div>
-        </div>
-        <div>
-          <div class="spec-val">3.1с</div>
-          <div class="spec-label">до 100 км/ч</div>
-        </div>
-        <div>
-          <div class="spec-val">V10</div>
-          <div class="spec-label">атмосферный</div>
-        </div>
-        <div>
-          <div class="spec-val">331</div>
-          <div class="spec-label">км/ч макс.</div>
-        </div>
+        <a href="#contact" class="btn btn--ghost">Записаться на просмотр</a>
       </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <h2 class="about-title sr">Не автосалон. Коллекция, которую мы курируем.</h2>
-  <div class="about-body sr">
-    <p>Каждый автомобиль в Obsidian прошёл 87-точечную инспекцию. Мы не берём машины на реализацию — мы выкупаем их, восстанавливаем до идеала и только потом выставляем.</p>
-    <p>Наши консультанты — владельцы спортивных машин с инженерным бэкграундом. Мы не продаём, мы помогаем найти ваш автомобиль.</p>
-    <div class="about-list">
-      <div class="about-item">
-        <div class="about-item-dot"></div>
-        <span class="about-item-text">Полная проверка истории, документов и технического состояния</span>
-      </div>
-      <div class="about-item">
-        <div class="about-item-dot"></div>
-        <span class="about-item-text">Собственный сервисный центр с оригинальными запчастями</span>
-      </div>
-      <div class="about-item">
-        <div class="about-item-dot"></div>
-        <span class="about-item-text">Расширенная гарантия до 3 лет на двигатель и трансмиссию</span>
-      </div>
-      <div class="about-item">
-        <div class="about-item-dot"></div>
-        <span class="about-item-text">Доставка по всей стране в течение 24 часов</span>
-      </div>
+  <section class="collection" id="collection">
+    <h2 class="section-heading reveal">Коллекция</h2>
+    <div class="collection__grid">
+      <article class="car car--hero reveal">
+        <img class="car__img" src="13fff7d3-0880-45b6-b916-33146de52787.png" alt="BMW M4 Competition на вечерней городской улице" loading="lazy">
+        <div class="car__info">
+          <h3 class="car__name">BMW M4 Competition</h3>
+          <p class="car__spec">3.0L Twin-Turbo I6 · 510 л.с.</p>
+        </div>
+      </article>
+      <article class="car reveal">
+        <img class="car__img" src="140c29e9-c5b3-4f96-bcf7-b911f6d790c6.png" alt="Mercedes-AMG A 45 S на фоне городского заката" loading="lazy">
+        <div class="car__info">
+          <h3 class="car__name">Mercedes-AMG A 45 S</h3>
+          <p class="car__spec">2.0L Turbo I4 · 421 л.с.</p>
+        </div>
+      </article>
+      <article class="car reveal">
+        <img class="car__img" src="175d4a6b-812f-4ddf-951e-8e4aacc8d4ad.png" alt="Toyota GR Supra на побережье на закате" loading="lazy">
+        <div class="car__info">
+          <h3 class="car__name">Toyota GR Supra</h3>
+          <p class="car__spec">3.0L Turbo I6 · 382 л.с.</p>
+        </div>
+      </article>
+      <article class="car reveal">
+        <img class="car__img" src="6db0d75c-5f59-4a15-a75d-dc955e213f60.png" alt="Porsche 911 Carrera у скалистого побережья" loading="lazy">
+        <div class="car__info">
+          <h3 class="car__name">Porsche 911 Carrera</h3>
+          <p class="car__spec">3.0L Twin-Turbo H6 · 385 л.с.</p>
+        </div>
+      </article>
+      <article class="car reveal">
+        <img class="car__img" src="d1ce1b24-9c11-47f0-84c4-9fc14ad08ffe.png" alt="Ford Mustang GT 5.0 на закате у океана" loading="lazy">
+        <div class="car__info">
+          <h3 class="car__name">Ford Mustang GT 5.0</h3>
+          <p class="car__spec">5.0L V8 · 450 л.с.</p>
+        </div>
+      </article>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <h2 class="contact-title sr">Запишитесь на показ</h2>
-  <p class="contact-sub sr">Подготовим автомобиль к осмотру и тест-драйву. Или просто приезжайте — шоурум открыт для визитов без записи.</p>
-  <form class="contact-form sr" onsubmit="event.preventDefault(); this.querySelector('.btn-primary').textContent='Отправлено'; this.querySelector('.btn-primary').style.background='#2a7a3a';">
-    <input type="text" class="field" placeholder="Имя" required>
-    <input type="tel" class="field" placeholder="Телефон" required>
-    <textarea class="field" placeholder="Какой автомобиль интересует?"></textarea>
-    <button type="submit" class="btn-primary">Отправить заявку</button>
-  </form>
-  <div class="contact-details sr">
-    <div class="cd-item">
-      <div class="cd-label">Телефон</div>
-      <div class="cd-value"><a href="tel:+74951234567">+7 495 123-45-67</a></div>
+  <section class="philosophy" id="about">
+    <div class="philosophy__inner reveal">
+      <h2 class="philosophy__heading">Мы не продаём автомобили</h2>
+      <p class="philosophy__text">Мы находим машины, за рулём которых хочется ехать дальше, чем планировал. Каждый автомобиль в коллекции отобран вручную: проверена история, состояние и характер.</p>
+      <p class="philosophy__text">Stratos — это не шоурум с рядами одинаковых машин. Это шесть автомобилей, каждый из которых стоит отдельного разговора.</p>
     </div>
-    <div class="cd-item">
-      <div class="cd-label">Адрес</div>
-      <div class="cd-value">Москва, Пресненская наб. 12</div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="reveal">
+      <h2 class="contact__heading">Запишитесь</h2>
+      <p class="contact__note">Просмотр или тест-драйв любого автомобиля из коллекции</p>
+      <p class="contact__phone"><a href="tel:+74951234567">+7 495 123 45 67</a></p>
+      <a href="tel:+74951234567" class="btn btn--primary">Позвонить</a>
     </div>
-    <div class="cd-item">
-      <div class="cd-label">Часы</div>
-      <div class="cd-value">Пн — Сб, 10 — 21</div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-left">OBSIDIAN MOTORS</div>
-  <div class="footer-right">&copy; 2026</div>
-</footer>
+  <footer class="footer">
+    <span class="footer__brand">Stratos</span>
+    <span class="footer__note">Москва · 2026</span>
+  </footer>
 
-<script>
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('vis');
-      obs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  <script>
+    (function () {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var d = parseInt(entry.target.dataset.delay || '0', 10);
+            setTimeout(function () { entry.target.classList.add('is-visible'); }, d);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+      document.querySelectorAll('.collection__grid, .featured__inner').forEach(function (g) {
+        g.querySelectorAll('.reveal').forEach(function (el, i) {
+          el.dataset.delay = String(i * 100);
+        });
+      });
 
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const t = document.querySelector(a.getAttribute('href'));
-    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
-</script>
+      document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
+
+      var hero = document.querySelector('.hero');
+      var spot = document.querySelector('.hero__spotlight');
+      if (hero && spot) {
+        hero.addEventListener('mousemove', function (e) {
+          var r = hero.getBoundingClientRect();
+          spot.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          spot.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        });
+      }
+    })();
+  </script>
 
 </body>
 </html>
