@@ -3,151 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OBSIDIAN MOTORS — Premium Performance</title>
+<title>OBSIDIAN MOTORS</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@200;300;400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap');
 
 :root {
-  --bg-void: #020202;
-  --bg-deep: #060606;
-  --bg-surface: #0e0e0e;
-  --bg-elevated: #181818;
-  --bg-glass: rgba(255,255,255,0.03);
-  --text-primary: #ede9e0;
-  --text-secondary: #7a756d;
-  --text-dim: #4a4640;
-  --accent: #C9A96E;
-  --accent-glow: rgba(201,169,110,0.15);
-  --accent-dim: #8B7542;
-  --red: #B91C1C;
+  --bg: #0A0A0C;
+  --bg-raised: #131315;
+  --bg-card: #19191C;
+  --bg-glass: rgba(19,19,21,0.72);
+  --text: #E8E6E1;
+  --text-muted: #7C7975;
+  --text-faint: #3E3C39;
+  --accent: #D42B2B;
+  --accent-soft: rgba(212,43,43,0.10);
+  --accent-hover: #E84040;
   --border: rgba(255,255,255,0.06);
-  --border-accent: rgba(201,169,110,0.2);
-  --font-display: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --border-hover: rgba(255,255,255,0.12);
+  --radius-pill: 100px;
+  --radius-card: 16px;
+  --radius-sm: 8px;
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --max-w: 1320px;
 }
 
-*, *::before, *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  overflow-x: clip;
   scrollbar-width: thin;
-  scrollbar-color: var(--accent-dim) var(--bg-deep);
+  scrollbar-color: var(--text-faint) var(--bg);
 }
 
 body {
   font-family: var(--font-body);
-  background: var(--bg-void);
-  color: var(--text-primary);
-  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-::selection {
-  background: var(--accent);
-  color: var(--bg-void);
-}
+::selection { background: var(--accent); color: #fff; }
 
-/* ===== NAV ===== */
+img { display: block; max-width: 100%; }
+
+/* ===== FLOATING PILL NAV ===== */
 .nav {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 1.5rem 3rem;
+  top: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  transition: background 0.5s, backdrop-filter 0.5s;
-}
-
-.nav.scrolled {
-  background: rgba(2,2,2,0.85);
-  backdrop-filter: blur(20px) saturate(1.2);
-  border-bottom: 1px solid var(--border);
+  gap: 0.25rem;
+  background: var(--bg-glass);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 0.45rem 0.5rem 0.45rem 1.5rem;
+  transition: all 0.4s var(--ease);
 }
 
 .nav-logo {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.1rem;
-  letter-spacing: 0.35em;
-  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--text);
   text-decoration: none;
-}
-
-.nav-logo span {
-  color: var(--accent);
+  margin-right: 1.5rem;
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
-  gap: 2.5rem;
+  gap: 0.2rem;
   list-style: none;
 }
 
 .nav-links a {
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 400;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   text-decoration: none;
-  transition: color 0.3s;
-  position: relative;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--accent);
-  transition: width 0.4s var(--ease-out-expo);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  transition: color 0.25s, background 0.25s;
+  white-space: nowrap;
 }
 
 .nav-links a:hover {
-  color: var(--text-primary);
-}
-
-.nav-links a:hover::after {
-  width: 100%;
+  color: var(--text);
+  background: rgba(255,255,255,0.06);
 }
 
 .nav-cta {
   font-family: var(--font-body);
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--bg-void);
+  color: #fff;
   background: var(--accent);
-  padding: 0.65rem 1.8rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: var(--radius-pill);
   text-decoration: none;
-  transition: all 0.3s;
+  margin-left: 0.5rem;
+  transition: background 0.25s;
+  white-space: nowrap;
 }
 
-.nav-cta:hover {
-  background: var(--text-primary);
-}
+.nav-cta:hover { background: var(--accent-hover); }
 
 /* ===== HERO ===== */
 .hero {
   position: relative;
-  height: 100vh;
-  min-height: 700px;
+  min-height: 100dvh;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-start;
   overflow: hidden;
 }
 
@@ -157,566 +136,432 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.7;
+  opacity: 0.55;
 }
 
-.hero-overlay {
+.hero-grad {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, rgba(2,2,2,0.3) 0%, transparent 30%),
-    linear-gradient(to top, var(--bg-void) 0%, rgba(2,2,2,0.4) 40%, transparent 70%),
-    linear-gradient(to right, rgba(2,2,2,0.5) 0%, transparent 50%);
+    linear-gradient(180deg, rgba(10,10,12,0.4) 0%, transparent 35%),
+    linear-gradient(0deg, var(--bg) 0%, rgba(10,10,12,0.6) 30%, transparent 60%),
+    linear-gradient(90deg, rgba(10,10,12,0.55) 0%, transparent 45%);
 }
 
-.hero-content {
+.hero-inner {
   position: relative;
   z-index: 2;
-  padding: 0 3rem 6rem;
-  max-width: 800px;
-}
-
-.hero-eyebrow {
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1s var(--ease-out-expo) 0.5s forwards;
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 2.5rem 5rem;
 }
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8vw, 7rem);
-  font-weight: 900;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
+  font-size: clamp(3rem, 7vw, 6.5rem);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
   margin-bottom: 1.5rem;
   opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 1s var(--ease-out-expo) 0.7s forwards;
-}
-
-.hero-title em {
-  font-style: normal;
-  color: var(--accent);
-  display: block;
-  font-weight: 200;
-  font-size: 0.45em;
-  letter-spacing: 0.25em;
-  margin-top: 0.5rem;
+  transform: translateY(24px);
+  animation: rise 0.9s var(--ease) 0.4s forwards;
 }
 
 .hero-sub {
-  font-size: 1rem;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
   font-weight: 300;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  max-width: 420px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 440px;
+  margin-bottom: 2.5rem;
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1s var(--ease-out-expo) 0.9s forwards;
+  transform: translateY(18px);
+  animation: rise 0.9s var(--ease) 0.65s forwards;
 }
 
-.hero-scroll {
-  position: absolute;
-  bottom: 2rem;
-  right: 3rem;
-  z-index: 2;
+.hero-actions {
   display: flex;
-  flex-direction: column;
+  gap: 1rem;
   align-items: center;
-  gap: 0.75rem;
   opacity: 0;
-  animation: fadeUp 1s var(--ease-out-expo) 1.3s forwards;
+  transform: translateY(16px);
+  animation: rise 0.9s var(--ease) 0.85s forwards;
 }
 
-.hero-scroll span {
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  writing-mode: vertical-rl;
+.btn-primary {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.25s, transform 0.15s;
 }
 
-.hero-scroll-line {
-  width: 1px;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-primary:active { transform: scale(0.97); }
+
+.btn-ghost {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  background: none;
+  border: 1px solid var(--border);
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.25s, border-color 0.25s;
 }
 
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
-  50% { opacity: 1; transform: scaleY(1); }
+.btn-ghost:hover {
+  color: var(--text);
+  border-color: var(--border-hover);
 }
 
-@keyframes fadeUp {
+@keyframes rise {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== MARQUEE ===== */
-.marquee-section {
-  padding: 2.5rem 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  overflow: hidden;
-  background: var(--bg-deep);
+/* ===== CATALOG ===== */
+.catalog {
+  padding: 6rem 2.5rem;
+  max-width: var(--max-w);
+  margin: 0 auto;
 }
 
-.marquee-track {
-  display: flex;
-  gap: 3rem;
-  animation: marqueeScroll 25s linear infinite;
-  width: max-content;
-}
-
-.marquee-item {
+.catalog-heading {
   font-family: var(--font-display);
-  font-size: 0.85rem;
-  font-weight: 300;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-}
-
-.marquee-item::after {
-  content: '\2726';
-  color: var(--accent-dim);
-  font-size: 0.6rem;
-}
-
-@keyframes marqueeScroll {
-  to { transform: translateX(-50%); }
-}
-
-/* ===== FEATURED ===== */
-.featured {
-  padding: 8rem 3rem;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 4rem;
-  flex-wrap: wrap;
-  gap: 2rem;
-}
-
-.section-label {
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1rem;
-}
-
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
   font-weight: 700;
-  line-height: 1.1;
   letter-spacing: -0.02em;
+  margin-bottom: 3.5rem;
+  line-height: 1.15;
 }
 
-.section-desc {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  max-width: 350px;
-  line-height: 1.7;
-  font-weight: 300;
-}
-
-/* ===== CATALOG GRID ===== */
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto;
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
 }
 
-.car-card {
+.car {
   position: relative;
+  background: var(--bg-card);
+  border-radius: var(--radius-card);
   overflow: hidden;
-  background: var(--bg-surface);
   border: 1px solid var(--border);
-  transition: border-color 0.5s, transform 0.5s var(--ease-out-expo);
+  transition: border-color 0.4s, transform 0.4s var(--ease);
   cursor: pointer;
 }
 
-.car-card:hover {
-  border-color: var(--border-accent);
-  transform: translateY(-4px);
+.car:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-3px);
 }
 
-.car-card:nth-child(1) { grid-column: span 2; }
-.car-card:nth-child(4) { grid-column: span 2; }
+.car.wide { grid-column: span 2; }
 
-.car-card-img {
+.car-img-wrap {
   width: 100%;
-  aspect-ratio: 16/10;
-  object-fit: cover;
+  overflow: hidden;
+}
+
+.car-img {
+  width: 100%;
+  height: auto;
   display: block;
-  transition: transform 0.8s var(--ease-out-expo), filter 0.5s;
-  filter: brightness(0.85) contrast(1.05);
+  transition: transform 0.6s var(--ease);
 }
 
-.car-card:nth-child(2) .car-card-img,
-.car-card:nth-child(3) .car-card-img,
-.car-card:nth-child(5) .car-card-img,
-.car-card:nth-child(6) .car-card-img {
-  aspect-ratio: 3/4;
+.car:hover .car-img {
+  transform: scale(1.03);
 }
 
-.car-card:hover .car-card-img {
-  transform: scale(1.04);
-  filter: brightness(0.95) contrast(1.05);
-}
-
-.car-card-info {
-  padding: 1.5rem;
+.car-body {
+  padding: 1.25rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  gap: 1rem;
 }
 
-.car-card-name {
+.car-name {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
-.car-card-sub {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  letter-spacing: 0.08em;
+.car-spec {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
-.car-card-price {
+.car-price {
   font-family: var(--font-display);
-  font-size: 0.85rem;
   font-weight: 600;
+  font-size: 0.95rem;
   color: var(--accent);
   white-space: nowrap;
 }
 
-.car-card-badge {
+.car-tag {
   position: absolute;
-  top: 1.2rem;
-  left: 1.2rem;
+  top: 1rem;
+  right: 1rem;
   background: var(--accent);
-  color: var(--bg-void);
-  font-size: 0.55rem;
+  color: #fff;
+  font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.4rem 0.9rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
   z-index: 2;
 }
 
-/* ===== PHILOSOPHY ===== */
-.philosophy {
-  padding: 10rem 3rem;
+/* ===== SPOTLIGHT ===== */
+.spotlight {
+  position: relative;
+  margin: 2rem 2.5rem;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  max-width: var(--max-w);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.spotlight-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: brightness(0.75);
+}
+
+.spotlight-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(10,10,12,0.85) 0%, transparent 55%);
+  display: flex;
+  align-items: flex-end;
+  padding: 3rem;
+}
+
+.spotlight-content {
+  max-width: 500px;
+}
+
+.spotlight-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  line-height: 1.1;
+}
+
+.spotlight-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+
+.spotlight-specs {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.spec-val {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.spec-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+}
+
+/* ===== ABOUT ===== */
+.about {
+  padding: 8rem 2.5rem;
+  max-width: var(--max-w);
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  align-items: center;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  position: sticky;
+  top: 6rem;
+}
+
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.about-body p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  font-weight: 300;
+  max-width: 52ch;
+}
+
+.about-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--border);
 }
 
-.philosophy-visual {
-  position: relative;
-}
-
-.philosophy-img {
-  width: 100%;
-  aspect-ratio: 4/5;
-  object-fit: cover;
-  filter: brightness(0.8) contrast(1.1);
-}
-
-.philosophy-accent {
-  position: absolute;
-  bottom: -2rem;
-  right: -2rem;
-  width: 180px;
-  height: 180px;
-  border: 1px solid var(--border-accent);
+.about-item {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-surface);
+  gap: 1rem;
+  align-items: baseline;
 }
 
-.philosophy-accent-number {
-  font-family: var(--font-display);
-  font-size: 3rem;
-  font-weight: 200;
-  color: var(--accent);
-  line-height: 1;
-}
-
-.philosophy-accent-label {
-  font-size: 0.6rem;
-  color: var(--text-secondary);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  text-align: center;
+.about-item-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
   margin-top: 0.5rem;
 }
 
-.philosophy-text {
-  max-width: 520px;
-}
-
-.philosophy-text .section-label {
-  margin-bottom: 1.5rem;
-}
-
-.philosophy-title {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 3.5vw, 3.2rem);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-bottom: 2rem;
-}
-
-.philosophy-body {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1.8;
-  font-weight: 300;
-  margin-bottom: 2rem;
-}
-
-.philosophy-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--border);
-}
-
-.stat-value {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--accent);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-
-.stat-label {
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+.about-item-text {
+  font-size: 0.9rem;
+  color: var(--text);
+  font-weight: 400;
   line-height: 1.5;
-}
-
-/* ===== SERVICES ===== */
-.services {
-  padding: 8rem 3rem;
-  border-top: 1px solid var(--border);
-  background: var(--bg-deep);
-}
-
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--border);
-  margin-top: 4rem;
-}
-
-.service-card {
-  background: var(--bg-deep);
-  padding: 3rem 2rem;
-  transition: background 0.4s;
-  position: relative;
-}
-
-.service-card:hover {
-  background: var(--bg-surface);
-}
-
-.service-icon {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
-  display: block;
-  width: 48px;
-  height: 48px;
-  border: 1px solid var(--border-accent);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent);
-  font-family: var(--font-display);
-  font-weight: 200;
-}
-
-.service-name {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.8rem;
-}
-
-.service-desc {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-  font-weight: 300;
 }
 
 /* ===== CONTACT ===== */
 .contact {
-  padding: 10rem 3rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  border-top: 1px solid var(--border);
-}
-
-.contact-info {
-  max-width: 480px;
+  padding: 6rem 2.5rem 8rem;
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .contact-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
   font-weight: 700;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  line-height: 1.15;
 }
 
-.contact-body {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.8;
-  font-weight: 300;
-  margin-bottom: 3rem;
-}
-
-.contact-details {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.contact-detail {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-}
-
-.contact-detail-label {
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--accent);
-  min-width: 80px;
-  padding-top: 0.2rem;
-}
-
-.contact-detail-value {
+.contact-sub {
   font-size: 0.95rem;
-  color: var(--text-primary);
+  color: var(--text-muted);
   font-weight: 300;
-  line-height: 1.6;
-}
-
-.contact-detail-value a {
-  color: var(--text-primary);
-  text-decoration: none;
-  border-bottom: 1px solid var(--border);
-  transition: border-color 0.3s;
-}
-
-.contact-detail-value a:hover {
-  border-color: var(--accent);
+  line-height: 1.65;
+  margin-bottom: 3rem;
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+  text-align: left;
 }
 
-.form-group {
-  position: relative;
-}
-
-.form-group input,
-.form-group textarea {
+.field {
   width: 100%;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--border);
-  padding: 1rem 0;
   font-family: var(--font-body);
   font-size: 0.9rem;
-  color: var(--text-primary);
-  font-weight: 300;
+  font-weight: 400;
+  color: var(--text);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1.2rem;
   outline: none;
-  transition: border-color 0.3s;
+  transition: border-color 0.25s;
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: var(--text-dim);
-  font-weight: 300;
+.field::placeholder { color: var(--text-faint); }
+.field:focus { border-color: var(--accent); }
+
+textarea.field { resize: vertical; min-height: 100px; }
+
+.contact-form .btn-primary {
+  width: 100%;
+  text-align: center;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  font-size: 0.9rem;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: var(--accent);
+.contact-details {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
 }
 
-.form-group textarea {
-  resize: none;
-  height: 120px;
+.cd-item {
+  text-align: center;
 }
 
-.form-submit {
-  align-self: flex-start;
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.25em;
+.cd-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--bg-void);
-  background: var(--accent);
-  border: none;
-  padding: 1rem 3rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 1rem;
+  color: var(--text-faint);
+  margin-bottom: 0.4rem;
 }
 
-.form-submit:hover {
-  background: var(--text-primary);
+.cd-value {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 400;
 }
+
+.cd-value a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.cd-value a:hover { color: var(--text); }
 
 /* ===== FOOTER ===== */
 .footer {
-  padding: 3rem;
+  padding: 2rem 2.5rem;
   border-top: 1px solid var(--border);
+  max-width: var(--max-w);
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -724,161 +569,78 @@ body {
   gap: 1rem;
 }
 
-.footer-logo {
+.footer-left {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 0.9rem;
-  letter-spacing: 0.35em;
-  color: var(--text-dim);
-}
-
-.footer-logo span {
-  color: var(--accent-dim);
-}
-
-.footer-copy {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  letter-spacing: 0.05em;
-}
-
-.footer-socials {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.footer-socials a {
-  font-size: 0.65rem;
+  font-weight: 600;
+  font-size: 0.75rem;
   letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  text-decoration: none;
-  transition: color 0.3s;
+  color: var(--text-faint);
 }
 
-.footer-socials a:hover {
-  color: var(--accent);
+.footer-right {
+  font-size: 0.75rem;
+  color: var(--text-faint);
 }
 
 /* ===== SCROLL REVEAL ===== */
-.reveal {
+.sr {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  transform: translateY(32px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
 }
 
-.reveal.visible {
+.sr.vis {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 1024px) {
-  .catalog-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .car-card:nth-child(1) { grid-column: span 2; }
-  .car-card:nth-child(4) { grid-column: span 1; }
-  .car-card:nth-child(2) .car-card-img,
-  .car-card:nth-child(3) .car-card-img,
-  .car-card:nth-child(5) .car-card-img,
-  .car-card:nth-child(6) .car-card-img {
-    aspect-ratio: 16/10;
-  }
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .philosophy {
+@media (max-width: 900px) {
+  .catalog-grid { grid-template-columns: 1fr; }
+  .car.wide { grid-column: span 1; }
+  .about {
     grid-template-columns: 1fr;
-    gap: 4rem;
-    padding: 6rem 3rem;
+    gap: 2rem;
+    padding: 5rem 1.5rem;
   }
-  .contact {
-    grid-template-columns: 1fr;
-    gap: 4rem;
-    padding: 6rem 3rem;
-  }
+  .about-title { position: static; }
+  .spotlight-specs { gap: 1.5rem; }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 720px) {
   .nav {
-    padding: 1rem 1.5rem;
+    padding: 0.4rem 0.4rem 0.4rem 1.2rem;
   }
-  .nav-links {
-    display: none;
-  }
-  .hero-content {
-    padding: 0 1.5rem 4rem;
-  }
-  .featured {
-    padding: 5rem 1.5rem;
-  }
-  .catalog-grid {
-    grid-template-columns: 1fr;
-  }
-  .car-card:nth-child(1),
-  .car-card:nth-child(4) {
-    grid-column: span 1;
-  }
-  .car-card:nth-child(2) .car-card-img,
-  .car-card:nth-child(3) .car-card-img,
-  .car-card:nth-child(5) .car-card-img,
-  .car-card:nth-child(6) .car-card-img {
-    aspect-ratio: 16/10;
-  }
-  .services {
-    padding: 5rem 1.5rem;
-  }
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-  .philosophy {
-    padding: 5rem 1.5rem;
-  }
-  .philosophy-accent {
-    display: none;
-  }
-  .contact {
-    padding: 5rem 1.5rem;
-  }
-  .footer {
-    padding: 2rem 1.5rem;
-    flex-direction: column;
-    text-align: center;
-  }
+  .nav-links { display: none; }
+  .hero-inner { padding: 0 1.5rem 3.5rem; }
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+  .catalog { padding: 4rem 1.5rem; }
+  .spotlight { margin: 1rem; }
+  .spotlight-overlay { padding: 1.5rem; }
+  .spotlight-specs { flex-wrap: wrap; gap: 1.5rem; }
+  .contact { padding: 4rem 1.5rem 5rem; }
+  .contact-details { flex-direction: column; gap: 1.5rem; }
+  .footer { padding: 1.5rem; justify-content: center; text-align: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .sr { opacity: 1; transform: none; transition: none; }
+  .hero-title, .hero-sub, .hero-actions {
+    opacity: 1; transform: none; animation: none;
   }
-  .hero-eyebrow, .hero-title, .hero-sub, .hero-scroll {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-  .marquee-track {
-    animation: none;
-  }
-  .hero-scroll-line {
-    animation: none;
-    opacity: 0.5;
-  }
+  .car:hover .car-img { transform: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="nav" id="nav">
-  <a href="#" class="nav-logo">OBSIDIAN<span>.</span></a>
+<!-- NAV — скруглённая плашка -->
+<nav class="nav">
+  <a href="#" class="nav-logo">OBSIDIAN</a>
   <ul class="nav-links">
     <li><a href="#catalog">Каталог</a></li>
-    <li><a href="#philosophy">О нас</a></li>
-    <li><a href="#services">Услуги</a></li>
-    <li><a href="#contact">Контакт</a></li>
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#contact">Связаться</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Записаться</a>
 </nav>
@@ -888,291 +650,211 @@ body {
   <video class="hero-video" autoplay muted loop playsinline>
     <source src="grok-video-aeb14a39-a59a-402d-b4ed-3543dba01932.mp4" type="video/mp4">
   </video>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">Premium Performance Dealership</p>
-    <h1 class="hero-title">
-      OBSIDIAN
-      <em>motors</em>
-    </h1>
-    <p class="hero-sub">
-      Эксклюзивная коллекция спортивных автомобилей для тех, кто не идёт на компромиссы. Каждая машина — произведение инженерного искусства.
-    </p>
-  </div>
-  <div class="hero-scroll">
-    <span>scroll</span>
-    <div class="hero-scroll-line"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-inner">
+    <h1 class="hero-title">Машины, которые<br>не нуждаются<br>в представлении</h1>
+    <p class="hero-sub">Курируем коллекцию спортивных автомобилей. Не продаём — подбираем под характер владельца.</p>
+    <div class="hero-actions">
+      <a href="#catalog" class="btn-primary">Смотреть каталог</a>
+      <a href="#contact" class="btn-ghost">Записаться на показ</a>
+    </div>
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-section">
-  <div class="marquee-track">
-    <span class="marquee-item">BMW M Performance</span>
-    <span class="marquee-item">Mercedes-AMG</span>
-    <span class="marquee-item">Porsche</span>
-    <span class="marquee-item">Audi Sport</span>
-    <span class="marquee-item">Ford Performance</span>
-    <span class="marquee-item">Toyota Gazoo Racing</span>
-    <span class="marquee-item">BMW M Performance</span>
-    <span class="marquee-item">Mercedes-AMG</span>
-    <span class="marquee-item">Porsche</span>
-    <span class="marquee-item">Audi Sport</span>
-    <span class="marquee-item">Ford Performance</span>
-    <span class="marquee-item">Toyota Gazoo Racing</span>
+<!-- CATALOG -->
+<section class="catalog" id="catalog">
+  <h2 class="catalog-heading sr">Сейчас в шоуруме</h2>
+
+  <div class="catalog-grid">
+
+    <article class="car wide sr">
+      <span class="car-tag">Только поступил</span>
+      <div class="car-img-wrap">
+        <img src="6db0d75c-5f59-4a15-a75d-dc955e213f60.png" alt="Porsche 911 Carrera" class="car-img">
+      </div>
+      <div class="car-body">
+        <div>
+          <h3 class="car-name">Porsche 911 Carrera</h3>
+          <p class="car-spec">992 &middot; 385 л.с. &middot; PDK &middot; 2024</p>
+        </div>
+        <span class="car-price">$124 500</span>
+      </div>
+    </article>
+
+    <article class="car sr">
+      <div class="car-img-wrap">
+        <img src="13fff7d3-0880-45b6-b916-33146de52787.png" alt="BMW M4 Competition" class="car-img">
+      </div>
+      <div class="car-body">
+        <div>
+          <h3 class="car-name">BMW M4 Competition</h3>
+          <p class="car-spec">G82 &middot; 510 л.с. &middot; M xDrive</p>
+        </div>
+        <span class="car-price">$89 900</span>
+      </div>
+    </article>
+
+    <article class="car sr">
+      <div class="car-img-wrap">
+        <img src="140c29e9-c5b3-4f96-bcf7-b911f6d790c6.png" alt="Mercedes-AMG A 45 S" class="car-img">
+      </div>
+      <div class="car-body">
+        <div>
+          <h3 class="car-name">Mercedes-AMG A 45 S</h3>
+          <p class="car-spec">W177 &middot; 421 л.с. &middot; 4MATIC+</p>
+        </div>
+        <span class="car-price">$72 500</span>
+      </div>
+    </article>
+
+    <article class="car sr">
+      <div class="car-img-wrap">
+        <img src="175d4a6b-812f-4ddf-951e-8e4aacc8d4ad.png" alt="Toyota GR Supra" class="car-img">
+      </div>
+      <div class="car-body">
+        <div>
+          <h3 class="car-name">Toyota GR Supra</h3>
+          <p class="car-spec">A90 &middot; 382 л.с. &middot; задний привод</p>
+        </div>
+        <span class="car-price">$56 200</span>
+      </div>
+    </article>
+
+    <article class="car sr">
+      <span class="car-tag">Последний</span>
+      <div class="car-img-wrap">
+        <img src="afe09e98-2ab3-409e-89dd-b5e0cca8d829.png" alt="Audi R8 V10 Performance" class="car-img">
+      </div>
+      <div class="car-body">
+        <div>
+          <h3 class="car-name">Audi R8 V10 Performance</h3>
+          <p class="car-spec">Type 4S &middot; 620 л.с. &middot; quattro</p>
+        </div>
+        <span class="car-price">$169 800</span>
+      </div>
+    </article>
+
+    <article class="car sr">
+      <div class="car-img-wrap">
+        <img src="d1ce1b24-9c11-47f0-84c4-9fc14ad08ffe.png" alt="Ford Mustang GT" class="car-img">
+      </div>
+      <div class="car-body">
+        <div>
+          <h3 class="car-name">Ford Mustang GT 5.0</h3>
+          <p class="car-spec">S550 &middot; 460 л.с. &middot; задний привод</p>
+        </div>
+        <span class="car-price">$48 700</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- SPOTLIGHT -->
+<div class="spotlight sr">
+  <img src="afe09e98-2ab3-409e-89dd-b5e0cca8d829.png" alt="Audi R8 V10 в ночном городе" class="spotlight-img">
+  <div class="spotlight-overlay">
+    <div class="spotlight-content">
+      <h3 class="spotlight-name">Audi R8 V10 Performance</h3>
+      <p class="spotlight-desc">Последний атмосферный суперкар Audi. 5.2-литровый V10, 620 лошадиных сил, разгон до сотни за 3.1 секунды. Эта модель больше не производится.</p>
+      <div class="spotlight-specs">
+        <div>
+          <div class="spec-val">620</div>
+          <div class="spec-label">л.с.</div>
+        </div>
+        <div>
+          <div class="spec-val">3.1с</div>
+          <div class="spec-label">до 100 км/ч</div>
+        </div>
+        <div>
+          <div class="spec-val">V10</div>
+          <div class="spec-label">атмосферный</div>
+        </div>
+        <div>
+          <div class="spec-val">331</div>
+          <div class="spec-label">км/ч макс.</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- CATALOG -->
-<section class="featured" id="catalog">
-  <div class="section-header reveal">
-    <div>
-      <p class="section-label">Каталог</p>
-      <h2 class="section-title">В наличии</h2>
-    </div>
-    <p class="section-desc">
-      Каждый автомобиль проходит 87-точечную проверку перед тем, как занять место в нашем шоуруме.
-    </p>
-  </div>
-
-  <div class="catalog-grid">
-    <!-- 1: BMW M4 — wide -->
-    <article class="car-card reveal">
-      <span class="car-card-badge">Новинка</span>
-      <img src="13fff7d3-0880-45b6-b916-33146de52787.png" alt="BMW M4 Competition" class="car-card-img" loading="lazy">
-      <div class="car-card-info">
-        <div>
-          <h3 class="car-card-name">BMW M4 Competition</h3>
-          <p class="car-card-sub">G82 &middot; 510 л.с. &middot; M xDrive</p>
-        </div>
-        <span class="car-card-price">$89 900</span>
+<!-- ABOUT -->
+<section class="about" id="about">
+  <h2 class="about-title sr">Не автосалон. Коллекция, которую мы курируем.</h2>
+  <div class="about-body sr">
+    <p>Каждый автомобиль в Obsidian прошёл 87-точечную инспекцию. Мы не берём машины на реализацию — мы выкупаем их, восстанавливаем до идеала и только потом выставляем.</p>
+    <p>Наши консультанты — владельцы спортивных машин с инженерным бэкграундом. Мы не продаём, мы помогаем найти ваш автомобиль.</p>
+    <div class="about-list">
+      <div class="about-item">
+        <div class="about-item-dot"></div>
+        <span class="about-item-text">Полная проверка истории, документов и технического состояния</span>
       </div>
-    </article>
-
-    <!-- 2: Mercedes AMG — tall -->
-    <article class="car-card reveal">
-      <img src="140c29e9-c5b3-4f96-bcf7-b911f6d790c6.png" alt="Mercedes-AMG A 45 S" class="car-card-img" loading="lazy">
-      <div class="car-card-info">
-        <div>
-          <h3 class="car-card-name">Mercedes-AMG A 45 S</h3>
-          <p class="car-card-sub">W177 &middot; 421 л.с. &middot; 4MATIC+</p>
-        </div>
-        <span class="car-card-price">$72 500</span>
+      <div class="about-item">
+        <div class="about-item-dot"></div>
+        <span class="about-item-text">Собственный сервисный центр с оригинальными запчастями</span>
       </div>
-    </article>
-
-    <!-- 3: Toyota Supra — tall -->
-    <article class="car-card reveal">
-      <img src="175d4a6b-812f-4ddf-951e-8e4aacc8d4ad.png" alt="Toyota GR Supra" class="car-card-img" loading="lazy">
-      <div class="car-card-info">
-        <div>
-          <h3 class="car-card-name">Toyota GR Supra</h3>
-          <p class="car-card-sub">A90 &middot; 382 л.с. &middot; RWD</p>
-        </div>
-        <span class="car-card-price">$56 200</span>
+      <div class="about-item">
+        <div class="about-item-dot"></div>
+        <span class="about-item-text">Расширенная гарантия до 3 лет на двигатель и трансмиссию</span>
       </div>
-    </article>
-
-    <!-- 4: Porsche 911 — wide -->
-    <article class="car-card reveal">
-      <span class="car-card-badge">Эксклюзив</span>
-      <img src="6db0d75c-5f59-4a15-a75d-dc955e213f60.png" alt="Porsche 911 Carrera" class="car-card-img" loading="lazy">
-      <div class="car-card-info">
-        <div>
-          <h3 class="car-card-name">Porsche 911 Carrera</h3>
-          <p class="car-card-sub">992 &middot; 385 л.с. &middot; PDK</p>
-        </div>
-        <span class="car-card-price">$124 500</span>
+      <div class="about-item">
+        <div class="about-item-dot"></div>
+        <span class="about-item-text">Доставка по всей стране в течение 24 часов</span>
       </div>
-    </article>
-
-    <!-- 5: Audi R8 — tall -->
-    <article class="car-card reveal">
-      <img src="afe09e98-2ab3-409e-89dd-b5e0cca8d829.png" alt="Audi R8 V10" class="car-card-img" loading="lazy">
-      <div class="car-card-info">
-        <div>
-          <h3 class="car-card-name">Audi R8 V10 Performance</h3>
-          <p class="car-card-sub">Type 4S &middot; 620 л.с. &middot; quattro</p>
-        </div>
-        <span class="car-card-price">$169 800</span>
-      </div>
-    </article>
-
-    <!-- 6: Mustang GT — tall -->
-    <article class="car-card reveal">
-      <img src="d1ce1b24-9c11-47f0-84c4-9fc14ad08ffe.png" alt="Ford Mustang GT" class="car-card-img" loading="lazy">
-      <div class="car-card-info">
-        <div>
-          <h3 class="car-card-name">Ford Mustang GT 5.0</h3>
-          <p class="car-card-sub">S550 &middot; 460 л.с. &middot; RWD</p>
-        </div>
-        <span class="car-card-price">$48 700</span>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- PHILOSOPHY -->
-<section class="philosophy" id="philosophy">
-  <div class="philosophy-visual reveal">
-    <img src="afe09e98-2ab3-409e-89dd-b5e0cca8d829.png" alt="Audi R8 in night city" class="philosophy-img">
-    <div class="philosophy-accent">
-      <div>
-        <div class="philosophy-accent-number">12</div>
-        <div class="philosophy-accent-label">лет на рынке</div>
-      </div>
-    </div>
-  </div>
-  <div class="philosophy-text reveal">
-    <p class="section-label">Философия</p>
-    <h2 class="philosophy-title">Не продаём машины.<br>Подбираем характер.</h2>
-    <p class="philosophy-body">
-      Obsidian Motors — это не автосалон в привычном смысле. Мы курируем коллекцию: каждый автомобиль отобран по принципу исключительности — двигатель, история, состояние, редкость комплектации.
-    </p>
-    <p class="philosophy-body">
-      Наши консультанты — не продавцы, а эксперты с инженерным образованием и собственным опытом владения спортивными автомобилями. Мы говорим на одном языке с нашими клиентами.
-    </p>
-    <div class="philosophy-stats">
-      <div>
-        <div class="stat-value">340+</div>
-        <div class="stat-label">Автомобилей<br>продано</div>
-      </div>
-      <div>
-        <div class="stat-value">98%</div>
-        <div class="stat-label">Клиентов<br>возвращаются</div>
-      </div>
-      <div>
-        <div class="stat-value">24ч</div>
-        <div class="stat-label">Доставка<br>по стране</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section class="services" id="services">
-  <div class="section-header reveal">
-    <div>
-      <p class="section-label">Услуги</p>
-      <h2 class="section-title">Полный цикл владения</h2>
-    </div>
-  </div>
-  <div class="services-grid reveal">
-    <div class="service-card">
-      <div class="service-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      </div>
-      <h3 class="service-name">Подбор и поиск</h3>
-      <p class="service-desc">Найдём автомобиль вашей мечты по всему миру. Проверим историю, состояние и юридическую чистоту.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/><path d="M6 14h4"/></svg>
-      </div>
-      <h3 class="service-name">Кредит и лизинг</h3>
-      <p class="service-desc">Индивидуальные программы финансирования от наших банков-партнёров. Одобрение за 2 часа.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
-      </div>
-      <h3 class="service-name">Сервис и тюнинг</h3>
-      <p class="service-desc">Собственный сервисный центр с оригинальными запчастями. Сертифицированные мастера для каждой марки.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      </div>
-      <h3 class="service-name">Гарантия</h3>
-      <p class="service-desc">Расширенная гарантия до 3 лет на все автомобили. Покрываем двигатель, трансмиссию и электронику.</p>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section class="contact" id="contact">
-  <div class="contact-info reveal">
-    <p class="section-label">Контакт</p>
-    <h2 class="contact-title">Запишитесь на<br>персональный показ</h2>
-    <p class="contact-body">
-      Приезжайте в наш шоурум — мы подготовим автомобиль к осмотру и тест-драйву. Или свяжитесь с нами удобным способом.
-    </p>
-    <div class="contact-details">
-      <div class="contact-detail">
-        <span class="contact-detail-label">Адрес</span>
-        <span class="contact-detail-value">Москва, Пресненская наб. 12,<br>Башня Федерация, уровень P1</span>
-      </div>
-      <div class="contact-detail">
-        <span class="contact-detail-label">Телефон</span>
-        <span class="contact-detail-value"><a href="tel:+74951234567">+7 (495) 123-45-67</a></span>
-      </div>
-      <div class="contact-detail">
-        <span class="contact-detail-label">Часы</span>
-        <span class="contact-detail-value">Пн — Сб: 10:00 — 21:00<br>Вс: по записи</span>
-      </div>
-      <div class="contact-detail">
-        <span class="contact-detail-label">Email</span>
-        <span class="contact-detail-value"><a href="mailto:hello@obsidian-motors.ru">hello@obsidian-motors.ru</a></span>
-      </div>
+  <h2 class="contact-title sr">Запишитесь на показ</h2>
+  <p class="contact-sub sr">Подготовим автомобиль к осмотру и тест-драйву. Или просто приезжайте — шоурум открыт для визитов без записи.</p>
+  <form class="contact-form sr" onsubmit="event.preventDefault(); this.querySelector('.btn-primary').textContent='Отправлено'; this.querySelector('.btn-primary').style.background='#2a7a3a';">
+    <input type="text" class="field" placeholder="Имя" required>
+    <input type="tel" class="field" placeholder="Телефон" required>
+    <textarea class="field" placeholder="Какой автомобиль интересует?"></textarea>
+    <button type="submit" class="btn-primary">Отправить заявку</button>
+  </form>
+  <div class="contact-details sr">
+    <div class="cd-item">
+      <div class="cd-label">Телефон</div>
+      <div class="cd-value"><a href="tel:+74951234567">+7 495 123-45-67</a></div>
+    </div>
+    <div class="cd-item">
+      <div class="cd-label">Адрес</div>
+      <div class="cd-value">Москва, Пресненская наб. 12</div>
+    </div>
+    <div class="cd-item">
+      <div class="cd-label">Часы</div>
+      <div class="cd-value">Пн — Сб, 10 — 21</div>
     </div>
   </div>
-  <form class="contact-form reveal" onsubmit="event.preventDefault();">
-    <div class="form-group">
-      <input type="text" placeholder="Ваше имя" required>
-    </div>
-    <div class="form-group">
-      <input type="tel" placeholder="Телефон">
-    </div>
-    <div class="form-group">
-      <input type="email" placeholder="Email">
-    </div>
-    <div class="form-group">
-      <textarea placeholder="Какой автомобиль вас интересует?"></textarea>
-    </div>
-    <button type="submit" class="form-submit">Отправить заявку</button>
-  </form>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-logo">OBSIDIAN<span>.</span></div>
-  <div class="footer-socials">
-    <a href="#">Telegram</a>
-    <a href="#">Instagram</a>
-    <a href="#">YouTube</a>
-  </div>
-  <p class="footer-copy">&copy; 2026 Obsidian Motors. Все права защищены.</p>
+  <div class="footer-left">OBSIDIAN MOTORS</div>
+  <div class="footer-right">&copy; 2026</div>
 </footer>
 
 <script>
-// Nav scroll effect
-const nav = document.getElementById('nav');
-let lastScroll = 0;
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 80);
-}, { passive: true });
-
-// Reveal on scroll
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, i * 80);
-      observer.unobserve(entry.target);
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('vis');
+      obs.unobserve(e.target);
     }
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-reveals.forEach(el => observer.observe(el));
+document.querySelectorAll('.sr').forEach(el => obs.observe(el));
 
-// Smooth anchor scroll
 document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
 </script>
